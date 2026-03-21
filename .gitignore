@@ -1,0 +1,16 @@
+node_modules
+
+.env
+.env.prod
+
+dist
+build
+.next
+out
+static
+
+tsconfig.tsbuildinfo
+.turbo
+.pnpm-debug.log
+
+.vscode

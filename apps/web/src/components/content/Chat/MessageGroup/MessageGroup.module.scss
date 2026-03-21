@@ -1,0 +1,58 @@
+.MsgGroup {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+	margin-bottom: $space-3;
+	animation: msgIn 0.2s $ease-out both;
+
+	@keyframes msgIn {
+		from {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	&.own {
+		align-items: flex-end;
+	}
+
+	.MsgGroupMeta {
+		display: flex;
+		align-items: center;
+		gap: $space-2;
+		padding: 0 2px;
+		margin-bottom: 3px;
+
+		.Avatar {
+			width: $size-avatar-sm;
+			height: $size-avatar-sm;
+			border-radius: $radius-avatar;
+			background: linear-gradient(135deg, #7c3aed, #ec4899);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.6rem;
+			font-weight: 700;
+			font-family: $font-display;
+			flex-shrink: 0;
+		}
+
+		.MetaName {
+			font-size: $text-sm;
+			font-weight: 600;
+			color: $text-secondary;
+		}
+		.MetaTime {
+			font-size: $text-xs;
+			color: $text-disabled;
+		}
+	}
+	&.own .MsgGroupMeta {
+		flex-direction: row-reverse;
+	}
+}

@@ -1,0 +1,141 @@
+$base-font-size: 16px;
+
+// ── ЦВЕТА БРЕНДА ──
+$brand-primary: #8b5cf6;
+$brand-primary-hover: #7c3aed;
+$brand-primary-active: #6d28d9;
+$brand-secondary: #ec4899;
+$brand-gradient: linear-gradient(135deg, #8b5cf6, #ec4899);
+
+// ── ФОНЫ ──
+$bg-app: #0a0a0f;
+$bg-panel: #12111a;
+$bg-elevated: #1c1a28;
+$bg-overlay: #241f35;
+$bg-message-in: #1c1a28;
+$bg-message-out: rgba(139, 92, 246, 0.15);
+$bg-input: #1c1a28;
+$bg-tooltip: #2a2640;
+$bg-badge: #8b5cf6;
+$bg-skeleton: #1c1a28;
+
+// ── ГРАНИЦЫ ──
+$border-subtle: #1e1c2e;
+$border-default: #2a2640;
+$border-strong: #3d3860;
+$border-focus: #8b5cf6;
+$border-message-in: #2a2640;
+$border-message-out: rgba(139, 92, 246, 0.25);
+
+// ── ТЕКСТ ──
+$text-primary: #e8e6f0;
+$text-secondary: #a09dba;
+$text-muted: #7c7a8e;
+$text-disabled: #4e4c60;
+$text-accent: #8b5cf6;
+$text-on-accent: #ffffff;
+$text-inverse: #0a0a0f;
+
+// ── СТАТУСЫ ──
+$status-online: #10b981;
+$status-away: #f59e0b;
+$status-offline: #4e4c60;
+$status-dnd: #e11d48;
+
+// ── СЕМАНТИЧЕСКИЕ ЦВЕТА ──
+$color-success: #10b981;
+$color-success-bg: rgba(16, 185, 129, 0.12);
+$color-warning: #f59e0b;
+$color-warning-bg: rgba(245, 158, 11, 0.12);
+$color-danger: #e11d48;
+$color-danger-bg: rgba(225, 29, 72, 0.12);
+$color-info: #3b82f6;
+$color-info-bg: rgba(59, 130, 246, 0.12);
+
+// ── СВЕЧЕНИЯ ──
+$glow-primary: rgba(139, 92, 246, 0.3);
+$glow-primary-strong: rgba(139, 92, 246, 0.5);
+$glow-secondary: rgba(236, 72, 153, 0.2);
+$glow-success: rgba(16, 185, 129, 0.25);
+
+// ── ТЕНИ ──
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+$shadow-panel: 4px 0 24px rgba(0, 0, 0, 0.4);
+$shadow-accent: 0 4px 20px rgba(139, 92, 246, 0.3);
+$shadow-accent-strong: 0 8px 28px rgba(139, 92, 246, 0.5);
+
+// ── РАЗМЕРЫ ──
+$size-sidebar-left: 300px;
+$size-sidebar-right: 280px;
+$size-header: 60px;
+$size-avatar-xs: 24px;
+$size-avatar-sm: 32px;
+$size-avatar-md: 40px;
+$size-avatar-lg: 52px;
+$size-avatar-xl: 72px;
+$size-icon-sm: 14px;
+$size-icon-md: 16px;
+$size-icon-lg: 20px;
+
+// ── ОТСТУПЫ ──
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-8: 32px;
+$space-10: 40px;
+
+// ── СКРУГЛЕНИЯ ──
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+$radius-xl: 18px;
+$radius-2xl: 24px;
+$radius-full: 9999px;
+$radius-bubble: 18px;
+$radius-bubble-tail: 5px;
+$radius-avatar: 50%;
+$radius-avatar-group: 14px;
+
+// ── РАЗМЕРЫ ШРИФТОВ ──
+$text-xs:   0.65rem;
+$text-sm:   0.75rem;
+$text-base: 0.875rem;
+$text-md:   0.925rem;
+$text-lg:   1rem;
+$text-xl:   1.125rem;
+$text-2xl:  1.35rem;
+$text-3xl:  1.6rem;
+
+// ── ШРИФТЫ ──
+$font-display: 'Syne', sans-serif;
+$font-body: 'DM Sans', sans-serif;
+$font-mono: 'JetBrains Mono', monospace;
+
+// ── АНИМАЦИИ ──
+$duration-fast: 150ms;
+$duration-normal: 250ms;
+$duration-slow: 350ms;
+$ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+$ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+// ── Z-ИНДЕКСЫ ──
+$z-base: 0;
+$z-raised: 10;
+$z-overlay: 50;
+$z-sidebar: 100;
+$z-modal: 200;
+$z-toast: 300;
+$z-tooltip: 400;
+
+// ── БРЕЙКПОИНТЫ ──
+$mobile-w:  480px;   // маленькие телефоны
+$tablet-w:  768px;   // планшеты и большие телефоны
+$laptop-w:  1024px;  // ноутбуки
+$desktop-w: 1280px;  // десктоп
+$wide-w:    1536px;  // широкие экраны

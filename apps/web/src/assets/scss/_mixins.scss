@@ -1,0 +1,34 @@
+@use 'variables.scss';
+
+@mixin onlymobile {
+  @media (min-width: 0px) and (max-width: calc(variables.$tablet-w - 1px)) {
+    @content;
+  }
+}
+
+@mixin iftablet {
+  @media (min-width: variables.$tablet-w) {
+    @content;
+  }
+}
+
+@mixin iflaptop {
+  @media (min-width: variables.$laptop-w) {
+    @content;
+  }
+}
+
+@mixin ifdesktop {
+  @media (min-width: variables.$desktop-w) {
+    @content;
+  }
+}
+
+@mixin cut-text($rows) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $rows;
+  text-overflow: ellipsis;
+  word-break: normal;
+}

@@ -1,0 +1,161 @@
+.Message {
+	max-width: 66%;
+	font-size: $text-base;
+	display: inline-block;
+
+	@media (max-width: 720px) {
+		max-width: 82%;
+	}
+
+	@media (max-width: 400px) {
+		max-width: 90%;
+		font-size: $text-sm;
+	}
+
+	/* Bubble */
+	.Bubble {
+		width: 100%;
+		padding: 10px $space-4;
+		background: $bg-message-in;
+		border: 1px solid $border-message-in;
+		border-radius: $radius-bubble;
+		color: $text-primary;
+		line-height: 1.55;
+		word-break: break-word;
+		position: relative;
+		transition: opacity $duration-fast;
+
+		&.image {
+			padding: 6px;
+		}
+
+		&:hover {
+			opacity: 0.92;
+		}
+
+		/* Image bubble */
+		.BubbleImg {
+			width: 220px;
+			aspect-ratio: 16/10;
+			border-radius: $radius-lg;
+			overflow: hidden;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 2rem;
+			position: relative;
+			background: linear-gradient(135deg, #1e1b4b, #312e81);
+
+			&::after {
+				content: "🔍";
+				position: absolute;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.5);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 1.3rem;
+				opacity: 0;
+				transition: opacity $duration-fast;
+				border-radius: $radius-lg;
+				display: grid;
+				place-items: center;
+			}
+
+			&:hover::after {
+				opacity: 1;
+			}
+		}
+	}
+
+	&.own .Bubble {
+		background: $bg-message-out;
+		border: 1px solid $border-message-out;
+		border-bottom-right-radius: $radius-bubble;
+
+		&.first {
+			border-top-right-radius: $radius-bubble-tail;
+		}
+		&.middle {
+			border-top-right-radius: $radius-bubble-tail;
+			border-bottom-right-radius: $radius-bubble-tail;
+		}
+		&.last {
+			border-bottom-right-radius: $radius-bubble-tail;
+		}
+	}
+
+	&:not(.own) .Bubble {
+		border-bottom-left-radius: $radius-bubble;
+
+		&.first {
+			border-top-left-radius: $radius-bubble-tail;
+		}
+		&.middle {
+			border-top-left-radius: $radius-bubble-tail;
+			border-bottom-left-radius: $radius-bubble-tail;
+		}
+		&.last {
+			border-bottom-left-radius: $radius-bubble-tail;
+		}
+	}
+
+	/* Reactions */
+	.Reactions {
+		display: flex;
+		gap: $space-1;
+		margin-top: $space-1;
+		flex-wrap: wrap;
+
+		.Reaction {
+			display: inline-flex;
+			align-items: center;
+			gap: 3px;
+			background: $bg-elevated;
+			border: 1px solid $border-default;
+			border-radius: $radius-full;
+			padding: 2px 8px;
+			font-size: $text-xs;
+			cursor: pointer;
+			transition: all $duration-fast;
+
+			&:hover {
+				border-color: $brand-primary;
+				background: rgba(139, 92, 246, 0.1);
+			}
+
+			&.mine {
+				border-color: rgba(139, 92, 246, 0.4);
+				background: rgba(139, 92, 246, 0.1);
+			}
+
+			.ReactionCount {
+				color: $text-muted;
+				font-weight: 600;
+				font-size: 0.68rem;
+			}
+		}
+	}
+	&.own .Reactions {
+		justify-content: flex-end;
+	}
+
+	/* Read status */
+	.MsgStatus {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 4px;
+		margin-top: 3px;
+
+		.MsgStatusTime {
+			font-size: $text-xs;
+			color: $text-disabled;
+		}
+
+		.ReadIcon {
+			color: $brand-primary;
+		}
+	}
+}

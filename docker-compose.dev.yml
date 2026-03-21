@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:17.5-alpine
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - '54321:5432'
+    networks:
+      - chatify-dev
+    environment:
+      POSTGRES_DB: chatify
+      POSTGRES_USER: chatify
+      POSTGRES_PASSWORD: chatify
+
+volumes:
+  postgres-data:
+
+networks:
+  chatify-dev:
+    driver: bridge

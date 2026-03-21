@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe — Чат</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════════════════════
+   CSS DESIGN TOKENS — VIBE CHAT
+   Семантические переменные для всего приложения
+═══════════════════════════════════════════════════════════ */
+:root {
+
+  /* ── ЦВЕТА БРЕНДА ── */
+  --brand-primary:        #8b5cf6;   /* основной акцент — фиолетовый */
+  --brand-primary-hover:  #7c3aed;   /* hover состояние */
+  --brand-primary-active: #6d28d9;   /* active/pressed */
+  --brand-secondary:      #ec4899;   /* вторичный акцент — розовый */
+  --brand-gradient:       linear-gradient(135deg, #8b5cf6, #ec4899);
+
+  /* ── ФОНЫ ── */
+  --bg-app:               #0a0a0f;   /* самый тёмный — фон всего приложения */
+  --bg-panel:             #12111a;   /* фон боковых панелей */
+  --bg-elevated:          #1c1a28;   /* приподнятые элементы — карточки, инпуты */
+  --bg-overlay:           #241f35;   /* оверлеи, hover фоны */
+  --bg-message-in:        #1c1a28;   /* фон входящего сообщения */
+  --bg-message-out:       rgba(139, 92, 246, 0.15); /* фон исходящего сообщения */
+  --bg-input:             #1c1a28;   /* фон полей ввода */
+  --bg-tooltip:           #2a2640;   /* фон тултипов */
+  --bg-badge:             #8b5cf6;   /* фон счётчиков и бейджей */
+  --bg-skeleton:          #1c1a28;   /* фон skeleton-загрузки */
+
+  /* ── ГРАНИЦЫ ── */
+  --border-subtle:        #1e1c2e;   /* едва заметные разделители */
+  --border-default:       #2a2640;   /* стандартная граница */
+  --border-strong:        #3d3860;   /* выраженная граница */
+  --border-focus:         #8b5cf6;   /* граница в фокусе */
+  --border-message-in:    #2a2640;   /* граница входящего сообщения */
+  --border-message-out:   rgba(139, 92, 246, 0.25); /* граница исходящего */
+
+  /* ── ТЕКСТ ── */
+  --text-primary:         #e8e6f0;   /* основной текст */
+  --text-secondary:       #a09dba;   /* вторичный текст — подзаголовки */
+  --text-muted:           #7c7a8e;   /* приглушённый — метаданные, плейсхолдеры */
+  --text-disabled:        #4e4c60;   /* недоступные элементы */
+  --text-accent:          #8b5cf6;   /* акцентный текст — ссылки, упоминания */
+  --text-on-accent:       #ffffff;   /* текст поверх акцентного фона */
+  --text-inverse:         #0a0a0f;   /* тёмный текст на светлом фоне */
+
+  /* ── СТАТУСЫ ── */
+  --status-online:        #10b981;   /* онлайн */
+  --status-away:          #f59e0b;   /* отошёл */
+  --status-offline:       #4e4c60;   /* офлайн */
+  --status-dnd:           #e11d48;   /* не беспокоить */
+
+  /* ── СЕМАНТИЧЕСКИЕ ЦВЕТА ── */
+  --color-success:        #10b981;
+  --color-success-bg:     rgba(16, 185, 129, 0.12);
+  --color-warning:        #f59e0b;
+  --color-warning-bg:     rgba(245, 158, 11, 0.12);
+  --color-danger:         #e11d48;
+  --color-danger-bg:      rgba(225, 29, 72, 0.12);
+  --color-info:           #3b82f6;
+  --color-info-bg:        rgba(59, 130, 246, 0.12);
+
+  /* ── СВЕЧЕНИЯ ── */
+  --glow-primary:         rgba(139, 92, 246, 0.3);
+  --glow-primary-strong:  rgba(139, 92, 246, 0.5);
+  --glow-secondary:       rgba(236, 72, 153, 0.2);
+  --glow-success:         rgba(16, 185, 129, 0.25);
+
+  /* ── ТЕНИ ── */
+  --shadow-sm:            0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md:            0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg:            0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-panel:         4px 0 24px rgba(0, 0, 0, 0.4);
+  --shadow-accent:        0 4px 20px var(--glow-primary);
+  --shadow-accent-strong: 0 8px 28px var(--glow-primary-strong);
+
+  /* ── РАЗМЕРЫ ── */
+  --size-sidebar-left:    300px;     /* ширина левой панели */
+  --size-sidebar-right:   280px;     /* ширина правой панели */
+  --size-header:          60px;      /* высота шапки чата */
+  --size-avatar-xs:       24px;
+  --size-avatar-sm:       32px;
+  --size-avatar-md:       40px;
+  --size-avatar-lg:       52px;
+  --size-avatar-xl:       72px;
+  --size-icon-sm:         14px;
+  --size-icon-md:         16px;
+  --size-icon-lg:         20px;
+
+  /* ── ОТСТУПЫ ── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+
+  /* ── СКРУГЛЕНИЯ ── */
+  --radius-sm:      6px;
+  --radius-md:      10px;
+  --radius-lg:      14px;
+  --radius-xl:      18px;
+  --radius-2xl:     24px;
+  --radius-full:    9999px;
+  --radius-bubble:  18px;   /* скругление пузырей сообщений */
+  --radius-bubble-tail: 5px; /* хвостик пузыря */
+  --radius-avatar:  50%;
+  --radius-avatar-group: 14px;
+
+  /* ── ШРИФТЫ ── */
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* ── РАЗМЕРЫ ШРИФТОВ ── */
+  --text-xs:   0.65rem;
+  --text-sm:   0.75rem;
+  --text-base: 0.875rem;
+  --text-md:   0.925rem;
+  --text-lg:   1rem;
+  --text-xl:   1.125rem;
+  --text-2xl:  1.35rem;
+  --text-3xl:  1.6rem;
+
+  /* ── АНИМАЦИИ ── */
+  --duration-fast:   150ms;
+  --duration-normal: 250ms;
+  --duration-slow:   350ms;
+  --ease-default:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out:        cubic-bezier(0, 0, 0.2, 1);
+
+  /* ── Z-ИНДЕКСЫ ── */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 50;
+  --z-sidebar: 100;
+  --z-modal:   200;
+  --z-toast:   300;
+  --z-tooltip: 400;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input, textarea { font-family: inherit; }
+a { text-decoration: none; color: inherit; }
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+/* ═══════════════════════════════════════════════════════════
+   APP LAYOUT
+═══════════════════════════════════════════════════════════ */
+.app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   OVERLAY — mobile sidebar
+═══════════════════════════════════════════════════════════ */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: var(--z-overlay);
+}
+.overlay.show { display: block; }
+
+/* ═══════════════════════════════════════════════════════════
+   LEFT PANEL
+═══════════════════════════════════════════════════════════ */
+.left-panel {
+  width: var(--size-sidebar-left);
+  flex-shrink: 0;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  z-index: var(--z-sidebar);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+/* ── Left top ── */
+.left-top {
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  flex-shrink: 0;
+}
+
+.app-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-primary);
+}
+.logo-pulse {
+  width: 9px; height: 9px;
+  background: var(--brand-primary);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 10px var(--brand-primary);
+  animation: logoPulse 2.5s ease-in-out infinite;
+}
+@keyframes logoPulse {
+  0%, 100% { box-shadow: 0 0 6px var(--brand-primary); }
+  50% { box-shadow: 0 0 18px var(--brand-primary), 0 0 36px var(--glow-primary); }
+}
+
+.bar-actions { display: flex; gap: var(--space-1); }
+
+.icon-btn {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--duration-fast) var(--ease-default);
+  position: relative;
+}
+.icon-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+.icon-btn .notif-dot {
+  position: absolute;
+  top: 5px; right: 5px;
+  width: 7px; height: 7px;
+  background: var(--brand-primary);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-panel);
+  box-shadow: 0 0 6px var(--glow-primary);
+}
+
+/* Search */
+.search-wrap { position: relative; }
+.search-icon {
+  position: absolute;
+  left: 11px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-disabled);
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  padding: 9px var(--space-3) 9px 34px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  outline: none;
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+.search-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+.search-input::placeholder { color: var(--text-disabled); }
+
+/* Tabs */
+.tabs {
+  display: flex;
+  padding: var(--space-2) var(--space-4) 0;
+  gap: 2px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 8px var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-disabled);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  white-space: nowrap;
+}
+.tab:hover { color: var(--text-secondary); }
+.tab.active { color: var(--text-primary); border-color: var(--brand-primary); }
+.tab-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 16px; height: 16px;
+  background: var(--bg-badge);
+  border-radius: var(--radius-full);
+  font-size: 0.55rem;
+  font-weight: 800;
+  color: var(--text-on-accent);
+  padding: 0 4px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* ── Contact list ── */
+.contact-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-2) 0;
+}
+
+.list-section-label {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-disabled);
+  padding: var(--space-3) var(--space-5) var(--space-2);
+}
+
+/* Online row */
+.online-row {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-1) var(--space-4) var(--space-3);
+  overflow-x: auto;
+}
+.online-row::-webkit-scrollbar { height: 0; }
+
+.online-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.online-avatar {
+  width: var(--size-avatar-md);
+  height: var(--size-avatar-md);
+  border-radius: var(--radius-avatar);
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-family: var(--font-display);
+  position: relative;
+  transition: transform var(--duration-fast) var(--ease-spring);
+  border: 2px solid var(--border-default);
+}
+.online-item:hover .online-avatar { transform: scale(1.1); }
+.online-avatar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 10px; height: 10px;
+  background: var(--status-online);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-panel);
+}
+.online-name {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  max-width: 44px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Chat item */
+.chat-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  transition: background var(--duration-fast);
+  position: relative;
+  user-select: none;
+}
+.chat-item:hover { background: rgba(255, 255, 255, 0.025); }
+.chat-item.active {
+  background: rgba(139, 92, 246, 0.1);
+}
+.chat-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 3px;
+  background: var(--brand-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  box-shadow: 2px 0 8px var(--glow-primary);
+}
+
+.chat-avatar {
+  width: var(--size-avatar-md);
+  height: var(--size-avatar-md);
+  border-radius: var(--radius-avatar);
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-family: var(--font-display);
+  flex-shrink: 0;
+  position: relative;
+}
+.chat-avatar.group { border-radius: var(--radius-avatar-group); }
+
+.status-dot {
+  position: absolute;
+  bottom: 1px; right: 1px;
+  width: 10px; height: 10px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-panel);
+}
+.s-online  { background: var(--status-online); }
+.s-away    { background: var(--status-away); }
+.s-offline { background: var(--status-offline); }
+
+.chat-info { flex: 1; min-width: 0; }
+.chat-name {
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.verified-icon { color: var(--brand-primary); flex-shrink: 0; }
+.chat-preview {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.preview-you { color: var(--brand-primary); font-weight: 500; }
+
+.chat-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+.chat-time { font-size: var(--text-xs); color: var(--text-disabled); }
+.unread-badge {
+  min-width: 18px; height: 18px;
+  background: var(--bg-badge);
+  border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: var(--text-on-accent);
+  padding: 0 var(--space-1);
+  font-family: var(--font-display);
+  box-shadow: 0 0 8px var(--glow-primary);
+}
+.unread-badge.muted {
+  background: var(--bg-overlay);
+  color: var(--text-muted);
+  box-shadow: none;
+}
+
+/* ── Left bottom ── */
+.left-bottom {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+.my-avatar {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-avatar);
+  background: var(--brand-gradient);
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-family: var(--font-display);
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  box-shadow: 0 0 0 2px var(--bg-panel), 0 0 0 3px rgba(139, 92, 246, 0.4);
+}
+.my-avatar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 10px; height: 10px;
+  background: var(--status-online);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-panel);
+}
+.my-info { flex: 1; min-width: 0; }
+.my-name { font-size: var(--text-base); font-weight: 600; }
+.my-status { font-size: var(--text-xs); color: var(--status-online); }
+
+/* ═══════════════════════════════════════════════════════════
+   CHAT WINDOW
+═══════════════════════════════════════════════════════════ */
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--bg-app);
+  position: relative;
+}
+
+/* ── Chat header ── */
+.chat-header {
+  height: var(--size-header);
+  padding: 0 var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--bg-panel);
+  flex-shrink: 0;
+  z-index: var(--z-raised);
+}
+
+.back-btn {
+  display: none;
+  width: 32px; height: 32px;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  align-items: center; justify-content: center;
+  transition: all var(--duration-fast);
+  flex-shrink: 0;
+}
+.back-btn:hover { color: var(--text-primary); background: var(--bg-elevated); }
+
+.header-avatar {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-avatar);
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-family: var(--font-display);
+  flex-shrink: 0;
+  position: relative;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+}
+.header-avatar::after {
+  content: '';
+  position: absolute;
+  bottom: 1px; right: 1px;
+  width: 10px; height: 10px;
+  background: var(--status-online);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-panel);
+}
+
+.header-info { flex: 1; min-width: 0; }
+.header-name {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header-status {
+  font-size: var(--text-xs);
+  color: var(--status-online);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.header-status::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--status-online);
+  border-radius: var(--radius-full);
+  animation: statusBlink 2s ease-in-out infinite;
+}
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.header-actions { display: flex; align-items: center; gap: var(--space-1); }
+
+/* ── Pinned ── */
+.pinned-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 9px var(--space-5);
+  background: rgba(139, 92, 246, 0.06);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.12);
+  cursor: pointer;
+  transition: background var(--duration-fast);
+  flex-shrink: 0;
+}
+.pinned-bar:hover { background: rgba(139, 92, 246, 0.1); }
+.pinned-accent {
+  width: 3px;
+  height: 28px;
+  background: var(--brand-primary);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+.pinned-content { min-width: 0; }
+.pinned-label {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--brand-primary);
+  margin-bottom: 1px;
+}
+.pinned-text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Messages area ── */
+.messages-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Date divider */
+.date-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-5) 0 var(--space-3);
+}
+.date-line { flex: 1; height: 1px; background: var(--border-subtle); }
+.date-chip {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: 500;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+/* Message group */
+.msg-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: var(--space-3);
+  animation: msgIn 0.2s var(--ease-out) both;
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.msg-group.out { align-items: flex-end; }
+.msg-group.in  { align-items: flex-start; }
+
+.msg-group-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 2px;
+  margin-bottom: 3px;
+}
+.msg-group.out .msg-group-meta { flex-direction: row-reverse; }
+.meta-avatar {
+  width: var(--size-avatar-sm);
+  height: var(--size-avatar-sm);
+  border-radius: var(--radius-avatar);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  flex-shrink: 0;
+}
+.meta-name { font-size: var(--text-sm); font-weight: 600; color: var(--text-secondary); }
+.meta-time { font-size: var(--text-xs); color: var(--text-disabled); }
+
+/* Bubble */
+.bubble {
+  max-width: 66%;
+  padding: 10px var(--space-4);
+  border-radius: var(--radius-bubble);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  word-break: break-word;
+  position: relative;
+  transition: opacity var(--duration-fast);
+}
+.bubble:hover { opacity: 0.92; }
+
+.msg-group.in .bubble {
+  background: var(--bg-message-in);
+  border: 1px solid var(--border-message-in);
+  border-bottom-left-radius: var(--radius-bubble-tail);
+  color: var(--text-primary);
+}
+.msg-group.out .bubble {
+  background: var(--bg-message-out);
+  border: 1px solid var(--border-message-out);
+  border-bottom-right-radius: var(--radius-bubble-tail);
+  color: var(--text-primary);
+}
+
+/* Reactions */
+.bubble-reactions {
+  display: flex;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+  flex-wrap: wrap;
+}
+.msg-group.out .bubble-reactions { justify-content: flex-end; }
+.reaction {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  padding: 2px 8px;
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.reaction:hover { border-color: var(--brand-primary); background: rgba(139, 92, 246, 0.1); }
+.reaction.mine { border-color: rgba(139, 92, 246, 0.4); background: rgba(139, 92, 246, 0.1); }
+.reaction-count { color: var(--text-muted); font-weight: 600; font-size: 0.68rem; }
+
+/* Read status */
+.msg-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 3px;
+}
+.msg-status-time { font-size: var(--text-xs); color: var(--text-disabled); }
+.read-icon { color: var(--brand-primary); }
+
+/* Image bubble */
+.bubble-img {
+  width: 220px;
+  aspect-ratio: 16/10;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  position: relative;
+}
+.bubble-img::after {
+  content: '🔍';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+  border-radius: var(--radius-lg);
+  display: grid;
+  place-items: center;
+}
+.bubble-img:hover::after { opacity: 1; }
+
+/* Voice bubble */
+.bubble-voice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 200px;
+}
+.voice-play-btn {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--brand-primary);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-spring);
+  box-shadow: var(--shadow-accent);
+}
+.voice-play-btn:hover { transform: scale(1.1); box-shadow: var(--shadow-accent-strong); }
+.voice-waveform {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 24px;
+}
+.wave-bar {
+  width: 3px;
+  background: rgba(139, 92, 246, 0.45);
+  border-radius: var(--radius-sm);
+}
+.voice-duration { font-size: var(--text-xs); color: var(--text-muted); flex-shrink: 0; }
+
+/* Typing */
+.typing-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-style: italic;
+}
+.typing-dots {
+  display: flex;
+  gap: 3px;
+  background: var(--bg-message-in);
+  border: 1px solid var(--border-message-in);
+  padding: 8px var(--space-3);
+  border-radius: 12px;
+  border-bottom-left-radius: 3px;
+}
+.typing-dot {
+  width: 6px; height: 6px;
+  background: var(--text-muted);
+  border-radius: var(--radius-full);
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+  40% { transform: scale(1.2); opacity: 1; }
+}
+
+/* ── Reply preview ── */
+.reply-preview {
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border-default);
+  margin: 0 var(--space-4);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border-bottom: none;
+}
+.reply-preview.show { display: flex; }
+.reply-accent {
+  width: 3px; height: 30px;
+  background: var(--brand-primary);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+.reply-info { flex: 1; min-width: 0; }
+.reply-from { font-size: var(--text-xs); font-weight: 600; color: var(--brand-primary); margin-bottom: 2px; }
+.reply-text { font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.reply-close { color: var(--text-disabled); transition: color var(--duration-fast); padding: 4px; }
+.reply-close:hover { color: var(--text-primary); }
+
+/* ── Input area ── */
+.input-area {
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+.input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+.attach-btn {
+  width: 38px; height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--duration-fast);
+}
+.attach-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+
+.input-wrapper {
+  flex: 1;
+  position: relative;
+}
+.msg-input {
+  width: 100%;
+  padding: 10px var(--space-10) 10px var(--space-4);
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  outline: none;
+  resize: none;
+  min-height: 40px;
+  max-height: 120px;
+  line-height: 1.45;
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+  overflow-y: auto;
+}
+.msg-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+.msg-input::placeholder { color: var(--text-disabled); }
+.emoji-btn {
+  position: absolute;
+  right: var(--space-3);
+  bottom: 9px;
+  color: var(--text-muted);
+  transition: color var(--duration-fast);
+  font-size: 1rem;
+  line-height: 1;
+}
+.emoji-btn:hover { color: var(--text-primary); }
+
+.send-btn {
+  width: 38px; height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--brand-primary);
+  color: var(--text-on-accent);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-spring);
+  box-shadow: var(--shadow-accent);
+}
+.send-btn:hover {
+  background: var(--brand-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-accent-strong);
+}
+.send-btn:active { transform: translateY(0); }
+
+/* ═══════════════════════════════════════════════════════════
+   RIGHT PANEL
+═══════════════════════════════════════════════════════════ */
+.right-panel {
+  width: var(--size-sidebar-right);
+  flex-shrink: 0;
+  background: var(--bg-panel);
+  border-left: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.rp-top {
+  padding: var(--space-4) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.rp-top-title {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+}
+
+.rp-profile {
+  padding: var(--space-6) var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.rp-avatar {
+  width: var(--size-avatar-xl);
+  height: var(--size-avatar-xl);
+  border-radius: var(--radius-avatar);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  margin-bottom: var(--space-3);
+  position: relative;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  box-shadow: 0 0 0 3px var(--bg-panel), 0 0 0 5px rgba(139, 92, 246, 0.3);
+}
+.rp-avatar::after {
+  content: '';
+  position: absolute;
+  bottom: 3px; right: 3px;
+  width: 14px; height: 14px;
+  background: var(--status-online);
+  border-radius: var(--radius-full);
+  border: 3px solid var(--bg-panel);
+}
+.rp-name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+  display: flex; align-items: center; gap: var(--space-1);
+}
+.rp-status-text { font-size: var(--text-sm); color: var(--status-online); margin-bottom: var(--space-3); }
+.rp-bio {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.55;
+  margin-bottom: var(--space-4);
+}
+.rp-actions { display: flex; gap: var(--space-2); width: 100%; }
+.rp-btn {
+  flex: 1;
+  padding: 8px var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-family: var(--font-display);
+  transition: all var(--duration-fast);
+  display: flex; align-items: center; justify-content: center; gap: var(--space-1);
+}
+.rp-btn-primary {
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--brand-primary);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+.rp-btn-primary:hover { background: rgba(139, 92, 246, 0.2); }
+.rp-btn-ghost {
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
+}
+.rp-btn-ghost:hover { color: var(--text-primary); border-color: var(--border-strong); }
+
+.rp-section {
+  padding: var(--space-4) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.rp-section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-disabled);
+  margin-bottom: var(--space-3);
+}
+.rp-info-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+}
+.rp-info-icon { color: var(--text-disabled); flex-shrink: 0; }
+.rp-info-val { color: var(--text-secondary); }
+
+.media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-1); }
+.media-cell {
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: opacity var(--duration-fast);
+  overflow: hidden;
+}
+.media-cell:hover { opacity: 0.75; }
+
+.rp-action-btn {
+  width: 100%;
+  padding: 9px var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  cursor: pointer;
+  display: flex; align-items: center; gap: var(--space-2);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  color: var(--text-muted);
+  transition: all var(--duration-fast);
+  margin-bottom: var(--space-2);
+}
+.rp-action-btn:hover { color: var(--text-primary); border-color: var(--border-strong); }
+.rp-action-btn.danger {
+  background: var(--color-danger-bg);
+  border-color: rgba(225, 29, 72, 0.2);
+  color: #fb7185;
+}
+.rp-action-btn.danger:hover { background: rgba(225, 29, 72, 0.2); }
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .right-panel { display: none; }
+}
+
+@media (max-width: 720px) {
+  .left-panel {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    transform: translateX(-100%);
+    z-index: var(--z-sidebar);
+    box-shadow: var(--shadow-panel);
+  }
+  .left-panel.open { transform: translateX(0); }
+  .back-btn { display: flex; }
+  .messages-area { padding: var(--space-4) var(--space-3); }
+  .bubble { max-width: 82%; }
+  .chat-header { padding: 0 var(--space-3); }
+  .input-area { padding: var(--space-2) var(--space-3) var(--space-3); }
+}
+
+@media (max-width: 400px) {
+  .bubble { max-width: 90%; font-size: var(--text-sm); }
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="app">
+
+  <!-- ══════════ LEFT PANEL ══════════ -->
+  <aside class="left-panel" id="leftPanel">
+
+    <div class="left-top">
+      <div class="app-bar">
+        <div class="logo">
+          <div class="logo-pulse"></div>
+          Vibe
+        </div>
+        <div class="bar-actions">
+          <button class="icon-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+          <button class="icon-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <div class="notif-dot"></div>
+          </button>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <svg class="search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-input" type="text" placeholder="Поиск по чатам...">
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active">Все <span class="tab-badge">5</span></div>
+      <div class="tab">Личные</div>
+      <div class="tab">Группы</div>
+      <div class="tab">Каналы</div>
+    </div>
+
+    <div class="contact-list">
+
+      <div class="list-section-label">Онлайн сейчас</div>
+      <div class="online-row">
+        <div class="online-item">
+          <div class="online-avatar" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">АК</div>
+          <div class="online-name">Алиса</div>
+        </div>
+        <div class="online-item">
+          <div class="online-avatar" style="background:linear-gradient(135deg,#0891b2,#06b6d4);">МК</div>
+          <div class="online-name">Максим</div>
+        </div>
+        <div class="online-item">
+          <div class="online-avatar" style="background:linear-gradient(135deg,#065f46,#10b981);">ДМ</div>
+          <div class="online-name">Даша</div>
+        </div>
+        <div class="online-item">
+          <div class="online-avatar" style="background:linear-gradient(135deg,#b45309,#f59e0b);">АС</div>
+          <div class="online-name">Артём</div>
+        </div>
+        <div class="online-item">
+          <div class="online-avatar" style="background:linear-gradient(135deg,#1d4ed8,#7c3aed);">КП</div>
+          <div class="online-name">Катя</div>
+        </div>
+      </div>
+
+      <div class="list-section-label">Сообщения</div>
+
+      <div class="chat-item active" onclick="selectChat(this)">
+        <div class="chat-avatar" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">
+          АК<div class="status-dot s-online"></div>
+        </div>
+        <div class="chat-info">
+          <div class="chat-name">
+            Алиса Козлова
+            <svg class="verified-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="chat-preview">Окей, завтра в 18:00 🙌</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">сейчас</div>
+          <div class="unread-badge">3</div>
+        </div>
+      </div>
+
+      <div class="chat-item" onclick="selectChat(this)">
+        <div class="chat-avatar group" style="background:linear-gradient(135deg,#1d4ed8,#7c3aed);">
+          🚀<div class="status-dot s-online"></div>
+        </div>
+        <div class="chat-info">
+          <div class="chat-name">Dev Team 🛠</div>
+          <div class="chat-preview"><span class="preview-you">Максим:</span> PR смержен, деплоим</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">2м</div>
+          <div class="unread-badge">12</div>
+        </div>
+      </div>
+
+      <div class="chat-item" onclick="selectChat(this)">
+        <div class="chat-avatar" style="background:linear-gradient(135deg,#065f46,#10b981);">
+          ДМ<div class="status-dot s-online"></div>
+        </div>
+        <div class="chat-info">
+          <div class="chat-name">Даша Михайлова</div>
+          <div class="chat-preview">Видела новый дизайн? 🔥</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">15м</div>
+          <div class="unread-badge">1</div>
+        </div>
+      </div>
+
+      <div class="chat-item" onclick="selectChat(this)">
+        <div class="chat-avatar group" style="background:linear-gradient(135deg,#7c3aed,#c026d3);">🎮</div>
+        <div class="chat-info">
+          <div class="chat-name">Gaming Squad</div>
+          <div class="chat-preview"><span class="preview-you">Артём:</span> го вечером рейд?</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">1ч</div>
+          <div class="unread-badge muted">🔕</div>
+        </div>
+      </div>
+
+      <div class="chat-item" onclick="selectChat(this)">
+        <div class="chat-avatar" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);">
+          КП<div class="status-dot s-offline"></div>
+        </div>
+        <div class="chat-info">
+          <div class="chat-name">Катя Петрова</div>
+          <div class="chat-preview">Спасибо за помощь!</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">вчера</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="left-bottom">
+      <div class="my-avatar">Я</div>
+      <div class="my-info">
+        <div class="my-name">Вы</div>
+        <div class="my-status">● Онлайн</div>
+      </div>
+      <button class="icon-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ══════════ CHAT WINDOW ══════════ -->
+  <main class="chat-window">
+
+    <div class="chat-header">
+      <button class="back-btn" onclick="openSidebar()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="header-avatar"></div>
+      <div class="header-info">
+        <div class="header-name">
+          Алиса Козлова
+          <svg class="verified-icon" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="header-status">печатает...</div>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18 2 2 0 015 5h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12a16 16 0 006.09 6.09l.25-.32a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 20z"/></svg>
+        </button>
+        <button class="icon-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        </button>
+        <button class="icon-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="pinned-bar">
+      <div class="pinned-accent"></div>
+      <div class="pinned-content">
+        <div class="pinned-label">Закреплено</div>
+        <div class="pinned-text">Встречаемся у метро Арбатская, выход 3 в 18:00</div>
+      </div>
+      <button class="icon-btn" style="flex-shrink:0;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="messages-area" id="messagesArea">
+
+      <div class="date-divider">
+        <div class="date-line"></div>
+        <div class="date-chip">Сегодня</div>
+        <div class="date-line"></div>
+      </div>
+
+      <div class="msg-group in">
+        <div class="msg-group-meta">
+          <div class="meta-avatar" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">АК</div>
+          <div class="meta-name">Алиса</div>
+          <div class="meta-time">14:22</div>
+        </div>
+        <div class="bubble">Привет! Ты помнишь про встречу завтра?</div>
+        <div class="bubble">Мы договаривались на 18:00, не передумал? 🙂</div>
+      </div>
+
+      <div class="msg-group out">
+        <div class="msg-group-meta">
+          <div class="meta-time">14:24</div>
+          <div class="meta-name">Вы</div>
+          <div class="meta-avatar" style="background:var(--brand-gradient);">Я</div>
+        </div>
+        <div class="bubble">Да конечно помню! Уже жду 😄</div>
+        <div class="msg-status">
+          <span class="msg-status-time">14:24</span>
+          <svg class="read-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/><polyline points="20 6 13 17" opacity=".4"/></svg>
+        </div>
+      </div>
+
+      <div class="msg-group in">
+        <div class="msg-group-meta">
+          <div class="meta-avatar" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">АК</div>
+          <div class="meta-name">Алиса</div>
+          <div class="meta-time">14:25</div>
+        </div>
+        <div class="bubble" style="padding:6px;">
+          <div class="bubble-img" style="background:linear-gradient(135deg,#1e1b4b,#312e81);">🗺️</div>
+        </div>
+        <div class="bubble">Карта как добраться — выход 3, там встретимся 📍</div>
+        <div class="bubble-reactions">
+          <div class="reaction mine">👍 <span class="reaction-count">2</span></div>
+          <div class="reaction">❤️ <span class="reaction-count">1</span></div>
+        </div>
+      </div>
+
+      <div class="msg-group out">
+        <div class="msg-group-meta">
+          <div class="meta-time">14:28</div>
+          <div class="meta-name">Вы</div>
+          <div class="meta-avatar" style="background:var(--brand-gradient);">Я</div>
+        </div>
+        <div class="bubble">
+          <div class="bubble-voice">
+            <button class="voice-play-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
+            <div class="voice-waveform" id="waveform"></div>
+            <span class="voice-duration">0:08</span>
+          </div>
+        </div>
+        <div class="msg-status">
+          <span class="msg-status-time">14:28</span>
+          <svg class="read-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+      </div>
+
+      <div class="msg-group in">
+        <div class="msg-group-meta">
+          <div class="meta-avatar" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">АК</div>
+          <div class="meta-name">Алиса</div>
+          <div class="meta-time">только что</div>
+        </div>
+        <div class="bubble">Окей, завтра в 18:00 🙌</div>
+        <div class="bubble">Кстати не забудь взять документы!</div>
+        <div class="bubble-reactions">
+          <div class="reaction">👍 <span class="reaction-count">1</span></div>
+        </div>
+      </div>
+
+      <div class="typing-row">
+        <div class="meta-avatar" style="background:linear-gradient(135deg,#7c3aed,#ec4899);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;font-family:var(--font-display);flex-shrink:0;">АК</div>
+        <div class="typing-dots">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="reply-preview" id="replyPreview">
+      <div class="reply-accent"></div>
+      <div class="reply-info">
+        <div class="reply-from">Алиса Козлова</div>
+        <div class="reply-text">Окей, завтра в 18:00 🙌</div>
+      </div>
+      <button class="reply-close" onclick="document.getElementById('replyPreview').classList.remove('show')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="input-area">
+      <div class="input-row">
+        <button class="attach-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+        </button>
+        <div class="input-wrapper">
+          <input type="text" class="msg-input" placeholder="Написать сообщение..." id="msgInput" onkeydown="handleKey(event)">
+          <button class="emoji-btn">😊</button>
+        </div>
+        <button class="send-btn" onclick="sendMessage()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ══════════ RIGHT PANEL ══════════ -->
+  <aside class="right-panel">
+    <div class="rp-top">
+      <div class="rp-top-title">Профиль</div>
+      <button class="icon-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="rp-profile">
+      <div class="rp-avatar">АК</div>
+      <div class="rp-name">
+        Алиса Козлова
+        <svg class="verified-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div class="rp-status-text">● Онлайн</div>
+      <div class="rp-bio">UX Designer · Люблю кофе, горы и хорошие интерфейсы ☕</div>
+      <div class="rp-actions">
+        <button class="rp-btn rp-btn-primary">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18 2 2 0 015 5h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12a16 16 0 006.09 6.09l.25-.32a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 20z"/></svg>
+          Звонок
+        </button>
+        <button class="rp-btn rp-btn-ghost">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+          Ещё
+        </button>
+      </div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rp-section-title">Информация</div>
+      <div class="rp-info-row">
+        <svg class="rp-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span class="rp-info-val">alisa@mail.ru</span>
+      </div>
+      <div class="rp-info-row">
+        <svg class="rp-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="rp-info-val">Москва</span>
+      </div>
+      <div class="rp-info-row">
+        <svg class="rp-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="rp-info-val">В Vibe с января 2024</span>
+      </div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rp-section-title">Общие медиа</div>
+      <div class="media-grid">
+        <div class="media-cell" style="background:linear-gradient(135deg,#1e1b4b,#4a1942);">🗺️</div>
+        <div class="media-cell" style="background:linear-gradient(135deg,#0f2418,#1a3a2a);">🌿</div>
+        <div class="media-cell" style="background:linear-gradient(135deg,#1a2744,#1e3a5f);">🏔️</div>
+        <div class="media-cell" style="background:linear-gradient(135deg,#2d1b1b,#4a1942);">🎨</div>
+        <div class="media-cell" style="background:linear-gradient(135deg,#1a1400,#2d2200);">☕</div>
+        <div class="media-cell" style="background:linear-gradient(135deg,#1e1b4b,#312e81);">🎵</div>
+      </div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rp-section-title">Действия</div>
+      <button class="rp-action-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        Отключить уведомления
+      </button>
+      <button class="rp-action-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Поиск по сообщениям
+      </button>
+      <button class="rp-action-btn danger">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        Заблокировать
+      </button>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  // Waveform
+  const wf = document.getElementById('waveform')
+  const heights = [8,14,10,18,22,16,12,20,15,10,18,14,8,12,20,16,11,19,13,9]
+  heights.forEach(h => {
+    const bar = document.createElement('div')
+    bar.className = 'wave-bar'
+    bar.style.height = h + 'px'
+    wf.appendChild(bar)
+  })
+
+  // Send message
+  function sendMessage() {
+    const input = document.getElementById('msgInput')
+    const val = input.value.trim()
+    if (!val) return
+
+    const area = document.getElementById('messagesArea')
+    const typing = area.querySelector('.typing-row')
+
+    const group = document.createElement('div')
+    group.className = 'msg-group out'
+    const time = new Date().toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' })
+    group.innerHTML = `
+      <div class="msg-group-meta">
+        <div class="meta-time">${time}</div>
+        <div class="meta-name">Вы</div>
+        <div class="meta-avatar" style="background:var(--brand-gradient);">Я</div>
+      </div>
+      <div class="bubble">${val}</div>
+      <div class="msg-status">
+        <span class="msg-status-time">${time}</span>
+        <svg class="read-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    `
+    area.insertBefore(group, typing)
+    input.value = ''
+    area.scrollTop = area.scrollHeight
+
+    // Auto reply
+    setTimeout(() => {
+      const replies = ['Понял! 👍', 'Окей, договорились!', 'Хорошо, буду ждать 😊', 'Отлично! 🙌', 'Супер!']
+      const r = document.createElement('div')
+      r.className = 'msg-group in'
+      r.innerHTML = `
+        <div class="msg-group-meta">
+          <div class="meta-avatar" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">АК</div>
+          <div class="meta-name">Алиса</div>
+          <div class="meta-time">сейчас</div>
+        </div>
+        <div class="bubble">${replies[Math.floor(Math.random() * replies.length)]}</div>
+      `
+      area.insertBefore(r, typing)
+      area.scrollTop = area.scrollHeight
+    }, 1000 + Math.random() * 800)
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage() }
+  }
+
+  // Mobile sidebar
+  function openSidebar() {
+    document.getElementById('leftPanel').classList.add('open')
+    document.getElementById('overlay').classList.add('show')
+  }
+  function closeSidebar() {
+    document.getElementById('leftPanel').classList.remove('open')
+    document.getElementById('overlay').classList.remove('show')
+  }
+
+  function selectChat(el) {
+    document.querySelectorAll('.chat-item').forEach(i => i.classList.remove('active'))
+    el.classList.add('active')
+    if (window.innerWidth <= 720) closeSidebar()
+  }
+
+  // Tabs
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
+      tab.classList.add('active')
+    })
+  })
+
+  // Scroll to bottom
+  const area = document.getElementById('messagesArea')
+  area.scrollTop = area.scrollHeight
+</script>
+
+</body>
+</html>

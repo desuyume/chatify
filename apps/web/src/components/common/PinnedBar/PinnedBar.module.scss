@@ -1,0 +1,54 @@
+.PinnedBar {
+  display: none;
+  align-items: center;
+  gap: $space-3;
+  padding: 9px $space-5;
+  background: rgba(139, 92, 246, 0.06);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.12);
+  cursor: pointer;
+  transition: background $duration-fast;
+  flex-shrink: 0;
+
+  &.visible {
+    display: flex;
+  }
+
+  &:hover {
+    background: rgba(139, 92, 246, 0.1);
+  }
+
+  .PinnedBarAccent {
+    width: 3px;
+    height: 28px;
+    background: $brand-primary;
+    border-radius: $radius-full;
+    flex-shrink: 0;
+  }
+
+  .PinnedBarContent {
+    min-width: 0;
+    flex-grow: 1;
+
+    .PinnedBarContentLabel {
+      font-family: $font-display;
+      font-size: $text-xs;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: $brand-primary;
+      margin-bottom: 1px;
+    }
+
+    .PinnedBarContentText {
+      font-size: $text-sm;
+      color: $text-secondary;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .IconBtn {
+    flex-shrink: 0;
+  }
+}

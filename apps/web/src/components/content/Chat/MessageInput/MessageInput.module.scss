@@ -1,0 +1,108 @@
+.MessageInput {
+	padding: $space-3 $space-4 $space-4;
+	background: $bg-panel;
+	border-top: 1px solid $border-subtle;
+	flex-shrink: 0;
+
+	.MessageInputRow {
+		display: flex;
+		align-items: flex-end;
+		gap: $space-2;
+
+		.AttachBtn {
+			width: 38px;
+			height: 38px;
+			border-radius: $radius-md;
+			background: $bg-elevated;
+			border: 1px solid $border-default;
+			color: $text-muted;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			transition: all $duration-fast;
+
+			&:hover {
+				border-color: $brand-primary;
+				color: $brand-primary;
+			}
+		}
+
+		.MessageInputWrapper {
+			flex: 1;
+			position: relative;
+
+			.MessageInputInput {
+				width: 100%;
+				padding: 10px $space-10 10px $space-4;
+				background: $bg-input;
+				border: 1px solid $border-default;
+				border-radius: $radius-xl;
+				color: $text-primary;
+				font-size: $text-base;
+				outline: none;
+				resize: none;
+				min-height: 40px;
+				max-height: 120px;
+				line-height: 1.45;
+				transition:
+					border-color $duration-fast,
+					box-shadow $duration-fast;
+				overflow-y: auto;
+
+				&:focus {
+					border-color: $border-focus;
+					box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+				}
+
+				&::placeholder {
+					color: $text-disabled;
+				}
+			}
+
+			.EmojiBtn {
+				position: absolute;
+				right: $space-3;
+				bottom: 9px;
+				color: $text-muted;
+				transition: color $duration-fast;
+				font-size: 1rem;
+				line-height: 1;
+
+				&:hover {
+					color: $text-primary;
+				}
+			}
+		}
+
+		.SendBtn {
+			width: 38px;
+			height: 38px;
+			border-radius: $radius-md;
+			background: $brand-primary;
+			color: $text-on-accent;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			transition: all $duration-fast $ease-spring;
+			box-shadow: $shadow-accent;
+
+			&:hover {
+				background: $brand-primary-hover;
+				transform: translateY(-1px);
+				box-shadow: $shadow-accent-strong;
+			}
+
+			&:active {
+				transform: translateY(0);
+			}
+		}
+	}
+}
+
+@media (max-width: 720px) {
+	.input-area {
+		padding: var(--space-2) var(--space-3) var(--space-3);
+	}
+}

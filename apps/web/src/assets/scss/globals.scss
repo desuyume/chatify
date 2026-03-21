@@ -1,0 +1,61 @@
+html,
+body {
+  max-width: 100vw;
+  font-family: $font-body;
+  font-size: $base-font-size;
+  overflow-x: hidden;
+  background-color: $bg-app;
+  color: $text-primary;
+  line-height: 1.5;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+input,
+textarea {
+  font-family: inherit;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: $border-default;
+  border-radius: $radius-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: $border-strong;
+}
+
+.highlighted {
+  animation: messageHighlight 1.5s ease-out forwards;
+}
+
+@keyframes messageHighlight {
+  0% {
+    background: rgba($brand-primary, 0.2);
+    border-radius: $radius-lg;
+  }
+  100% {
+    background: transparent;
+  }
+}

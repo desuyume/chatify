@@ -1,0 +1,6 @@
+export { default as ChatHeader } from './ChatHeader/ChatHeader'
+export { default as Message } from './Message/Message'
+export { default as VoiceMessage } from './Message/VoiceMessage/VoiceMessage'
+export { default as MessageGroup } from './MessageGroup/MessageGroup'
+export { default as MessageInput } from './MessageInput/MessageInput'
+export { default as MessagesArea } from './MessagesArea/MessagesArea'

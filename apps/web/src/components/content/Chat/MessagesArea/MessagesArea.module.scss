@@ -1,0 +1,12 @@
+.MessagesArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: $space-4 $space-3;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  @include iftablet {
+    padding: $space-6 $space-5;
+  }
+}

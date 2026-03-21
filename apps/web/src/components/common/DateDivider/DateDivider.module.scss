@@ -1,0 +1,23 @@
+.DateDivider {
+	display: flex;
+	align-items: center;
+	gap: $space-3;
+	margin: $space-5 0 $space-3;
+
+	.DateLine {
+		flex: 1;
+		height: 1px;
+		background: $border-subtle;
+	}
+
+	.DateChip {
+		font-size: $text-xs;
+		color: $text-muted;
+		font-weight: 500;
+		background: $bg-elevated;
+		border: 1px solid $border-default;
+		padding: 3px $space-3;
+		border-radius: $radius-full;
+		white-space: nowrap;
+	}
+}
