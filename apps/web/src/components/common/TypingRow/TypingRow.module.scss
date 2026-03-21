@@ -1,48 +1,48 @@
 .TypingRow {
-	display: flex;
-	align-items: center;
-	gap: $space-2;
-	padding: $space-1 0;
-	color: $text-muted;
-	font-size: $text-sm;
-	font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-1 0;
+  color: $text-muted;
+  font-size: $text-sm;
+  font-style: italic;
 
-	.TypingDots {
-		display: flex;
-		gap: 3px;
-		background: $bg-message-in;
-		border: 1px solid $border-message-in;
-		padding: 8px $space-3;
-		border-radius: 12px;
-		border-bottom-left-radius: 3px;
+  .TypingDots {
+    display: flex;
+    gap: 3px;
+    background: $bg-message-in;
+    border: 1px solid $border-message-in;
+    padding: 8px $space-3;
+    border-radius: 12px;
+    border-bottom-left-radius: 3px;
 
-		.TypingDot {
-			width: 6px;
-			height: 6px;
-			background: $text-muted;
-			border-radius: $radius-full;
-			animation: typingBounce 1.4s ease-in-out infinite;
+    .TypingDot {
+      width: 6px;
+      height: 6px;
+      background: $text-muted;
+      border-radius: $radius-full;
+      animation: typingBounce 1.4s ease-in-out infinite;
 
-			&:nth-child(2) {
-				animation-delay: 0.2s;
-			}
+      &:nth-child(2) {
+        animation-delay: 0.2s;
+      }
 
-			&:nth-child(3) {
-				animation-delay: 0.4s;
-			}
+      &:nth-child(3) {
+        animation-delay: 0.4s;
+      }
 
-			@keyframes typingBounce {
-				0%,
-				80%,
-				100% {
-					transform: scale(0.8);
-					opacity: 0.5;
-				}
-				40% {
-					transform: scale(1.2);
-					opacity: 1;
-				}
-			}
-		}
-	}
+      @keyframes typingBounce {
+        0%,
+        80%,
+        100% {
+          transform: scale(0.8);
+          opacity: 0.5;
+        }
+        40% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+      }
+    }
+  }
 }

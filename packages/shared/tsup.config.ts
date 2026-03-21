@@ -6,7 +6,7 @@ export default defineConfig({
     'validators/index': 'src/validators/index.ts',
     'constants/index': 'src/constants/index.ts',
     'helpers/index': 'src/helpers/index.ts',
-    'mocks/index': 'src/mocks/index.ts',
+    'mocks/index': 'src/mocks/index.ts'
   },
   format: ['cjs', 'esm'],
   dts: {

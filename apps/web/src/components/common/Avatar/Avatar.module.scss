@@ -1,31 +1,31 @@
 .Avatar {
-	width: $size-avatar-sm;
-	height: $size-avatar-sm;
-	border-radius: $radius-avatar;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 0.6rem;
-	font-weight: 700;
-	font-family: $font-display;
-	flex-shrink: 0;
+  width: $size-avatar-sm;
+  height: $size-avatar-sm;
+  border-radius: $radius-avatar;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  font-family: $font-display;
+  flex-shrink: 0;
 
-	&.xs {
-		width: $size-avatar-xs;
-		height: $size-avatar-xs;
-		font-size: 0.55rem;
-	}
+  &.xs {
+    width: $size-avatar-xs;
+    height: $size-avatar-xs;
+    font-size: 0.55rem;
+  }
 
-	.AvatarDefault {
-		width: 100%;
-		height: 100%;
-		border-radius: $radius-avatar;
-		background: linear-gradient(135deg, #7c3aed, #ec4899);
-	}
+  .AvatarDefault {
+    width: 100%;
+    height: 100%;
+    border-radius: $radius-avatar;
+    background: linear-gradient(135deg, #7c3aed, #ec4899);
+  }
 
-	.AvatarImage {
-		width: 100%;
-		height: 100%;
-		border-radius: $radius-avatar;
-	}
+  .AvatarImage {
+    width: 100%;
+    height: 100%;
+    border-radius: $radius-avatar;
+  }
 }

@@ -1,44 +1,44 @@
 .VoiceMessage {
-	display: flex;
-	align-items: center;
-	gap: $space-3;
-	min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  min-width: 200px;
 
-	.VoiceMessagePlayBtn {
-		width: 32px;
-		height: 32px;
-		border-radius: $radius-full;
-		background: $brand-primary;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-		transition: all $duration-fast $ease-spring;
-		box-shadow: $shadow-accent;
+  .VoiceMessagePlayBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-full;
+    background: $brand-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all $duration-fast $ease-spring;
+    box-shadow: $shadow-accent;
 
-		&:hover {
-			transform: scale(1.1);
-			box-shadow: $shadow-accent-strong;
-		}
-	}
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: $shadow-accent-strong;
+    }
+  }
 
-	.VoiceMessageWaveform {
-		flex: 1;
-		display: flex;
-		align-items: center;
-		gap: 2px;
-		height: 24px;
+  .VoiceMessageWaveform {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 24px;
 
-		.VoiceMessageWaveBar {
-			width: 3px;
-			background: rgba(139, 92, 246, 0.45);
-			border-radius: $radius-sm;
-		}
-	}
+    .VoiceMessageWaveBar {
+      width: 3px;
+      background: rgba(139, 92, 246, 0.45);
+      border-radius: $radius-sm;
+    }
+  }
 
-	.VoiceMessageDuration {
-		font-size: $text-xs;
-		color: $text-muted;
-		flex-shrink: 0;
-	}
+  .VoiceMessageDuration {
+    font-size: $text-xs;
+    color: $text-muted;
+    flex-shrink: 0;
+  }
 }

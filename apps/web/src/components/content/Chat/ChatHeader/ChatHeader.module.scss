@@ -72,21 +72,21 @@
       gap: 4px;
 
       &::before {
-        content: "";
+        content: '';
         width: 6px;
         height: 6px;
         border-radius: $radius-full;
         animation: statusBlink 2s ease-in-out infinite;
       }
 
-      &[data-status="online"] {
+      &[data-status='online'] {
         color: $status-online;
 
         &::before {
           background-color: $status-online;
         }
       }
-      &[data-status="offline"] {
+      &[data-status='offline'] {
         color: $status-offline;
 
         &::before {
@@ -94,7 +94,7 @@
           animation: none;
         }
       }
-      &[data-status="away"] {
+      &[data-status='away'] {
         color: $status-away;
 
         &::before {
